@@ -1,0 +1,6 @@
+{
+  "name": "Molecule Forge",
+  "description": "AI-powered chemical route-discovery and process-screening platform for identifying commercially promising molecules from refinery-derived feedstocks.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
