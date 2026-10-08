@@ -3,7 +3,8 @@
 
 [![Deployment Status](https://img.shields.io/badge/Deployment-Vercel_Production_Ready-000000?style=flat-square&logo=vercel)](https://vercel.com)
 [![Framework](https://img.shields.io/badge/Framework-React_19_%7C_Vite_8-61DAFB?style=flat-square&logo=react)](https://react.dev/)
-[![Language](https://img.shields.io/badge/Language-TypeScript_7.0-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Language](https://img.shields.io/badge/Language-TypeScript_7.0_%7C_Python-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Cheminformatics](https://img.shields.io/badge/Cheminformatics-RDKit_Integration-008080?style=flat-square)](https://www.rdkit.org/)
 [![Styling](https://img.shields.io/badge/Styling-Tailwind_CSS_v4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
 [![Standards](https://img.shields.io/badge/Metrics-ACS_GCI_Green_Chemistry-10B981?style=flat-square)](#5-quantitative-scoring-model-and-mathematical-framework)
 [![Architecture](https://img.shields.io/badge/Architecture-Human--in--the--Loop_Decision_Support-F59E0B?style=flat-square)](#10-risk-mitigation-governance-and-responsible-ai-positioning)
@@ -15,7 +16,10 @@
 - [1. Executive Summary](#1-executive-summary)
 - [2. The Industrial Problem Statement](#2-the-industrial-problem-statement)
 - [3. The Proposed Solution: Five Analytical Pillars](#3-the-proposed-solution-five-analytical-pillars)
-- [4. Operational Workflow](#4-operational-workflow)
+- [4. Detailed Operational Workflow](#4-detailed-operational-workflow)
+  - [4.1 Dual Exploration Modes](#41-dual-exploration-modes)
+  - [4.2 The 14-Step End-to-End Decision Pipeline](#42-the-14-step-end-to-end-decision-pipeline)
+  - [4.3 Database Schema Design](#43-database-schema-design)
 - [5. Quantitative Scoring Model and Mathematical Framework](#5-quantitative-scoring-model-and-mathematical-framework)
   - [5.1 Multi-Attribute Forge Score Formulation](#51-multi-attribute-forge-score-formulation)
   - [5.2 Green Chemistry and Environmental Metrics](#52-green-chemistry-and-environmental-metrics)
@@ -24,19 +28,20 @@
   - [6.2 Downstream Valorization Scenario: Benzene to 4-H-3-MBN](#62-downstream-valorization-scenario-benzene-to-4-h-3-mbn)
   - [6.3 Multi-Route Trade-Off Evaluation Matrix](#63-multi-route-trade-off-evaluation-matrix)
 - [7. System Architecture](#7-system-architecture)
-- [8. Technology Stack and Implementation Details](#8-technology-stack-and-implementation-details)
+- [8. Technology Stack Specification](#8-technology-stack-specification)
 - [9. Installation and Deployment Guide](#9-installation-and-deployment-guide)
   - [9.1 Local Development Environment](#91-local-development-environment)
-  - [9.2 Production Deployment on Vercel](#92-production-deployment-on-vercel)
+  - [9.2 Executing the Mathematical Scoring Engine CLI](#92-executing-the-mathematical-scoring-engine-cli)
+  - [9.3 Production Deployment on Vercel](#93-production-deployment-on-vercel)
 - [10. Risk Mitigation, Governance, and Responsible AI Positioning](#10-risk-mitigation-governance-and-responsible-ai-positioning)
 - [11. Strategic Roadmap](#11-strategic-roadmap)
-- [12. Engineering Team and Track Record](#12-engineering-team-and-track-record)
+- [12. Engineering Team and Hackathon Track Record](#12-engineering-team-and-hackathon-track-record)
 
 ---
 
 ## 1. Executive Summary
 
-**Molecule Forge** is an enterprise-grade, computer-aided process screening and chemical route-discovery platform. It enables integrated petroleum refineries and petrochemical complexes to transition from bulk commodity fuel producers into high-margin specialty chemical and pharmaceutical intermediate manufacturers.
+**Molecule Forge** is an enterprise-grade, computer-aided process screening and chemical route-discovery platform. It enables integrated petroleum refineries and petrochemical complexes to transition from bulk commodity fuel producers into high-margin specialty chemical, Key Starting Material (KSM), and pharmaceutical intermediate manufacturers.
 
 By starting with available refinery aromatic cuts—including benzene, toluene, xylenes, and downstream phenol—the platform systematically generates, screens, and multi-objectively ranks retrosynthetic reaction pathways before capital-intensive laboratory validation is initiated.
 
@@ -68,7 +73,7 @@ By starting with available refinery aromatic cuts—including benzene, toluene, 
 
 ## 2. The Industrial Problem Statement
 
-Refinery operations generate abundant aromatic molecules alongside traditional transportation fuels. However, transforming these basic petrochemical intermediates into high-value specialty chemicals, Key Starting Materials (KSMs), or Active Pharmaceutical Ingredients (APIs) is hindered by severe cross-functional friction:
+Refinery operations generate abundant aromatic molecules alongside traditional transportation fuels. However, transforming these basic petrochemical intermediates into high-value specialty chemicals or pharmaceutical building blocks is hindered by severe cross-functional friction:
 
 ```
 ┌──────────────────┐       ┌──────────────────────┐       ┌──────────────────────┐
@@ -87,7 +92,7 @@ Refinery operations generate abundant aromatic molecules alongside traditional t
 
 ### The Cost of Sequential Evaluation
 In standard industrial workflows, prospective synthesis routes are evaluated in disconnected silos:
-1. **Synthetic chemists** discover a chemically viable route, optimizing solely for reaction yield in milligram-scale glassware.
+1. **Synthetic chemists** design a chemically viable route, optimizing solely for reaction yield in milligram-scale glassware.
 2. **Process engineers** subsequently identify that Step 2 requires cryogenic cooling (-20 °C) or hazardous high-pressure autogenous conditions (>40 bar), introducing prohibitive plant CAPEX.
 3. **Procurement teams** discover that critical coupling reagents or specialized organometallic catalysts suffer from 90%+ overseas import dependencies.
 4. **Environmental teams** calculate unacceptable waste factors (E-factor > 30), highlighting heavy-metal or cyanide effluent compliance barriers.
@@ -110,7 +115,7 @@ Molecule Forge breaks departmental silos by unifying chemistry, chemical enginee
 
 ---
 
-## 4. Operational Workflow
+## 4. Detailed Operational Workflow
 
 ```
                                   OPERATIONAL INPUT MODES
@@ -146,11 +151,125 @@ Target-First     ──► Supply Target Molecule (SMILES / CAS / Nomenclature) 
                              (Experimental Plan & Risk Gateways)
 ```
 
-1. **Input Ingestion:** The user designates either a captive feedstock stream or enters an existing specialty chemical target via SMILES, CAS, or molecular structure.
-2. **Constrained Exploration:** Retrosynthetic graph expansion generates candidate reaction networks governed by user-defined process boundaries (e.g., maximum four transformations, exclusion of halogenated solvents, preference for atmospheric operations).
-3. **Parallel Attribute Screening:** Candidate routes are simultaneously evaluated across technical, economic, environmental, and supply-chain domains.
-4. **Pareto Ranking:** Routes are ranked using the multi-attribute Forge Score, surfacing the exact trade-offs between shortest, greenest, and most cost-effective alternatives.
-5. **Dossier Generation:** The system synthesizes an experimental validation dossier detailing target conversion rates, primary risk gates, and analytical protocols.
+### 4.1 Dual Exploration Modes
+
+* **Feedstock-First Mode (Downstream Diversification):**
+  * *Entry Point:* The user designates a captive refinery stream (e.g., Benzene or Phenol).
+  * *Query Objective:* "Identify commercial specialty chemicals, resins, or agrochemical intermediates synthesizable from this stream with $\le 4$ synthetic steps and benign solvent systems."
+  * *Outcome:* Unlocks new market opportunities beyond conventional transportation fuels.
+
+* **Target-First Mode (Import Substitution):**
+  * *Entry Point:* The user inputs an in-demand API intermediate or agrochemical active ingredient (by name, CAS, or SMILES).
+  * *Query Objective:* "Decompose this target retrosynthetically backward until all terminal precursors align with captive refinery aromatics."
+  * *Outcome:* Accelerates import substitution programs with domestic raw-material security.
+
+---
+
+### 4.2 The 14-Step End-to-End Decision Pipeline
+
+Molecule Forge executes an audited, 14-step computational pipeline that transforms an initial operational hypothesis into an actionable laboratory dossier:
+
+```
+[01. Feedstock/Target Selection] ──► [02. Molecular Structure Validation (SMILES)]
+                 │
+                 ▼
+[03. Process & Sustainability Constraints] ──► [04. Feedstock Intelligence Mapping]
+                 │
+                 ▼
+[05. Retrosynthetic Route Generation] ──► [06. Precedent Retrieval & Confidence Scoring]
+                 │
+                 ▼
+[07. Process Feasibility & Unit Operations] ──► [08. Green Chemistry Matrix (E-Factor/PMI)]
+                 │
+                 ▼
+[09. Techno-Economic Analysis (TEA)] ──► [10. Multi-Attribute Forge Score Ranking]
+                 │
+                 ▼
+[11. Explainable Decision Rationale] ──► [12. Human-in-the-Loop Chemist Review Gate]
+                 │
+                 ▼
+[13. Actionable Lab Validation Dossier] ──► [14. Closed-Loop Experimental Calibration]
+```
+
+1. **Feedstock or Target Ingestion:** User selects a refinery stream (e.g., Benzene, Purity 99.8%) or inputs a prospective target compound.
+2. **Molecular Structure Validation:** Parses structure, generates canonical SMILES, validates valence states, and detects reactive functional handles.
+3. **Constraint Parameterization:** User specifies operational boundaries: maximum transformation count ($\le 4$), prohibited reagent classes, preferred solvent categories, and maximum allowable operating pressure.
+4. **Feedstock Intelligence Mapping:** Identifies downstream derivative families (phenolics, nitration chains, alkylated aromatics) mapped to captive industrial feeds.
+5. **Retrosynthetic Pathway Generation:** Deconstructs the target molecule step-by-step using curated reaction transformation templates.
+6. **Precedent Retrieval & Confidence Scoring:** Cross-references each proposed transformation against published chemical precedents; assigns data reliability scores.
+7. **Process Engineering Screening:** Evaluates thermal envelopes, autogenous pressures, crystallization bottlenecks, and phase separations.
+8. **Green Chemistry Assessment:** Calculates quantitative mass-balance metrics: E-Factor, Process Mass Intensity (PMI), Atom Economy, and solvent environmental safety index.
+9. **Techno-Economic Analysis (TEA):** Models raw-material stoichiometry, catalyst consumption, solvent recovery, and sensitivity to feedstock tariff fluctuations.
+10. **Multi-Attribute Forge Score Ranking:** Normalizes all parameters into the composite Forge Score ($F \in [0, 100]$), highlighting Pareto-optimal alternatives.
+11. **Explainable Decision Synthesis:** Translates computational rankings into natural-language engineering rationales (e.g., explaining why Route B is selected over shorter Route A).
+12. **Human-in-the-Loop Review Gate:** Domain chemists inspect intermediate structures, edit catalyst assumptions, and register operational approvals or exclusions.
+13. **Laboratory Validation Dossier Generation:** Produces an actionable experimental plan specifying target conversions, expected regioselectivities, analytical HPLC/GC protocols, and primary risk gates.
+14. **Continuous Learning Loop:** Once laboratory experiments are completed, empirical yields and conversion rates are fed back into the system to refine future algorithmic predictions.
+
+---
+
+### 4.3 Database Schema Design
+
+The platform's underlying relational data model enforces relational integrity across feedstocks, molecules, reactions, and validation logs:
+
+```
+┌─────────────────────────┐          ┌─────────────────────────┐
+│     FEEDSTOCK_TABLE     │          │     COMPOUND_TABLE      │
+├─────────────────────────┤          ├─────────────────────────┤
+│ feedstock_id (PK)       │          │ compound_id (PK)        │
+│ name                    │          │ name                    │
+│ chemical_formula        │          │ smiles (Canonical)      │
+│ structure_smiles        │          │ molecular_weight        │
+│ purity_range            │          │ product_category        │
+│ impurity_profile        │          │ hazard_class            │
+│ availability_status     │          │ market_segment          │
+└────────────┬────────────┘          └────────────┬────────────┘
+             │                                    │
+             └──────────────────┬─────────────────┘
+                                │
+                                ▼
+                   ┌─────────────────────────┐
+                   │     REACTION_TABLE      │
+                   ├─────────────────────────┤
+                   │ reaction_id (PK)        │
+                   │ reaction_class          │
+                   │ reactants / products    │
+                   │ catalyst / solvent      │
+                   │ temperature_range       │
+                   │ pressure_range          │
+                   │ expected_yield_range    │
+                   │ literature_precedents   │
+                   └────────────┬────────────┘
+                                │
+                                ▼
+                   ┌─────────────────────────┐
+                   │       ROUTE_TABLE       │
+                   ├─────────────────────────┤
+                   │ route_id (PK)           │
+                   │ target_compound_id (FK) │
+                   │ feedstock_id (FK)       │
+                   │ number_of_steps         │
+                   │ cumulative_yield        │
+                   │ estimated_cost_per_kg   │
+                   │ e_factor                │
+                   │ pmi                     │
+                   │ solvent_safety_score    │
+                   │ forge_score             │
+                   └────────────┬────────────┘
+                                │
+                                ▼
+                   ┌─────────────────────────┐
+                   │    VALIDATION_TABLE     │
+                   ├─────────────────────────┤
+                   │ validation_id (PK)      │
+                   │ route_id (FK)           │
+                   │ experiments_required    │
+                   │ primary_uncertainty     │
+                   │ priority_level          │
+                   │ assigned_chemist        │
+                   │ empirical_result_logged │
+                   └─────────────────────────┘
+```
 
 ---
 
@@ -289,12 +408,22 @@ graph TD
 
 ---
 
-## 8. Technology Stack and Implementation Details
+## 8. Technology Stack Specification
 
-* **Client Presentation Layer:** React 19, TypeScript 7.0, Vite 8.3, TailwindCSS v4, Lucide React, Motion.
-* **Cheminformatics Foundations:** SMILES notation parsers, curated transformation templates, substructure similarity indexing.
-* **Process Simulation & Evaluation:** Algorithmic E-Factor calculators, stoichiometric mass-balance models, solvent classification tables.
-* **Deployment & Infrastructure:** Vercel edge deployment with client-side SPA routing (`vercel.json`) and deterministic dependency management (`.npmrc` with `legacy-peer-deps`).
+The platform architecture is organized across specialized layers designed for scalability, chemical precision, and interactive user experience:
+
+| Architectural Layer | Technologies & Tools | Purpose & Capabilities |
+|---|---|---|
+| **Frontend Application** | React 19, TypeScript 7.0, Vite 8.3, TailwindCSS v4 | Real-time interactive decision cockpit, responsive design, dark mode aesthetics |
+| **Interactive Visualization** | Lucide React, Motion, SVG Molecular Visualizers | Reaction graph representation, multi-attribute radar charts, sequential reasoning step indicators |
+| **Backend & Microservices** | Python 3.11+, FastAPI, Pydantic, Node.js | Asynchronous REST APIs, payload validation, high-throughput calculation endpoints |
+| **Cheminformatics Engine** | RDKit, MolVS | SMILES parsing, structure validation, substructure search, functional-group tolerance, molecular fingerprinting |
+| **Scientific Data Processing** | Pandas, NumPy | Stoichiometric balance modeling, E-Factor, PMI, and economic sensitivity matrix calculations |
+| **ML Ranking & Optimization** | Scikit-learn, XGBoost, PyTorch | Multi-attribute route ranking, precedent confidence estimation, gradient-boosted scoring |
+| **Vector Search & Precedents** | FAISS, Chroma DB | High-dimensional chemical reaction similarity search and literature precedent retrieval |
+| **Database & Knowledge Store** | PostgreSQL, SQLite | Relational schema storage for feedstocks, compounds, curated reaction templates, and validation logs |
+| **Decision Explainability (LLM)**| Google Gemini 2.5 API / DeepMind GenAI SDK | Synthesizes natural-language justification briefs and executive validation reports from verified computational metrics |
+| **Deployment & Infrastructure**| Vercel Edge Network, Docker, GitHub Actions | Continuous deployment, automated builds, zero-downtime hosting with full SPA rewrites |
 
 ---
 
@@ -322,9 +451,21 @@ npm run lint
 npm run build
 ```
 
-### 9.2 Production Deployment on Vercel
+---
 
-The repository is pre-configured with root-level `vercel.json` and `.vercelignore` files:
+### 9.2 Executing the Mathematical Scoring Engine CLI
+
+A standalone, executable mathematical scoring and decision engine is located at [`src/engine/moleculeForgeEngine.ts`](./src/engine/moleculeForgeEngine.ts). It calculates all metrics live in terminal for presentations:
+
+```bash
+npx tsx src/engine/moleculeForgeEngine.ts
+```
+
+---
+
+### 9.3 Production Deployment on Vercel
+
+The repository is pre-configured with root-level [`vercel.json`](./vercel.json) and [`.vercelignore`](./.vercelignore) files:
 1. Import the repository into the **Vercel Dashboard**.
 2. Vercel automatically selects the **Vite** preset, executes `npm run build`, and routes all incoming requests through `dist/index.html`.
 3. To deploy directly via the command line:
@@ -356,17 +497,21 @@ The repository is pre-configured with root-level `vercel.json` and `.vercelignor
 
 ---
 
-## 12. Engineering Team and Track Record
+## 12. Engineering Team and Hackathon Track Record
 
 ### Core Contributors
 
-* **Siddharth Raut** — *Team Lead & UI/UX Designer*
-  * Platform architecture, user experience design, and end-to-end product implementation.
-* **Abhyuday Jain** — *Domain & Chemistry Researcher*
-  * Chemical route validation, reaction template curation, and green chemistry metric modeling.
-* **Hardik Mathur** — *Backend & Systems Engineer*
-  * Process feasibility logic, data structures, and mathematical scoring algorithms.
+| Contributor | Role & Specialization | Focus Areas |
+|---|---|---|
+| **Siddharth Raut** | **Team Lead & UI/UX Designer** | Platform architecture, Human-Computer Interaction (HCI), frontend engineering, and product vision. |
+| **Abhyuday Jain** | **Domain & Chemistry Researcher** | Reaction template curation, retrosynthetic pathway validation, ACS-GCI green chemistry metrics, and literature precedent verification. |
+| **Hardik Mathur** | **Backend & Systems Engineer** | Process feasibility algorithms, mathematical scoring models, data structure design, and computational optimization. |
 
-### Competitive Track Record
-* **3rd Rank (National Finalist)** — **Punjab & Sind Bank (PSB) Hackathon / Bank of Baroda (BOB) Hackathon**
-* **3rd Rank (National Finalist)** — **NIT Raipur Codeutsava National Hackathon**
+### National Hackathon Track Record
+
+Our engineering team brings a proven track record of podium finishes in major competitive hackathons:
+
+* 🥉 **3rd Rank (National Finalist)** — **Punjab & Sind Bank (PSB) Hackathon / Bank of Baroda (BOB) Hackathon**
+  * *Awarded for building high-reliability, data-intensive FinTech solutions under rigorous technical constraints.*
+* 🥉 **3rd Rank (National Finalist)** — **NIT Raipur Codeutsava National Hackathon**
+  * *Central India's flagship 28-hour national hackathon, recognized for software architecture, computational rigor, and system design.*

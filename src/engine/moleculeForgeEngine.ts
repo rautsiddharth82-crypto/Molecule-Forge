@@ -76,7 +76,7 @@ export interface RouteEvaluationResult {
   routeId: string;
   routeName: string;
   stepCount: number;
-  
+
   // Fundamental Metric Calculations
   eFactor: number;
   pmi: number;
@@ -84,7 +84,7 @@ export interface RouteEvaluationResult {
   cumulativeYieldPercent: number;
   solventHazardIndex: number;
   operationalPenalty: number;
-  
+
   // Normalized 0 - 100 Dimension Scores
   scores: {
     technicalFeasibility: number;    // T
@@ -160,10 +160,10 @@ export class MoleculeForgeFormulas {
     for (const s of solvents) {
       let categoryPenalty = 0;
       switch (s.category) {
-        case 'PREFERRED':   categoryPenalty = 5; break;
-        case 'USABLE':      categoryPenalty = 20; break;
+        case 'PREFERRED': categoryPenalty = 5; break;
+        case 'USABLE': categoryPenalty = 20; break;
         case 'UNDESIRABLE': categoryPenalty = 55; break;
-        case 'BANNED':      categoryPenalty = 95; break;
+        case 'BANNED': categoryPenalty = 95; break;
       }
       const itemHazard = (categoryPenalty * 0.6) + (s.toxicityScore * 0.4 * (1.0 - s.recyclabilityFactor * 0.5));
       totalHazard += itemHazard;
@@ -368,7 +368,7 @@ export class MoleculeForgeEngine {
 
     let executiveRationale = "";
     if (winner && runnerUp) {
-      executiveRationale = 
+      executiveRationale =
         `"${winner.routeName}" is prioritized over "${runnerUp.routeName}" (Score: ${winner.forgeScore} vs ${runnerUp.forgeScore}). ` +
         `Although ${runnerUp.stepCount < winner.stepCount ? 'the alternative has fewer steps' : 'alternatives were explored'}, ` +
         `${winner.routeName} achieves superior environmental and operational alignment: ` +
