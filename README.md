@@ -1,364 +1,372 @@
-# ⚛️ Molecule Forge
-### *From Refinery Feedstock to High-Value Molecule — Before the First Experiment Begins*
+# Molecule Forge
+### Refinery-to-Chemicals Opportunity Discovery and Sustainable Route-Screening Platform
 
-[![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel)](https://vercel.com)
-[![Vite 8](https://img.shields.io/badge/Vite-8.3.3-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![React 19](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-7.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Tailwind CSS v4](https://img.shields.io/badge/TailwindCSS-v4.3-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Green Chemistry](https://img.shields.io/badge/ACS_GCI-Green_Metrics-10B981?style=for-the-badge&logo=leaf&logoColor=white)](#-green-chemistry--process-feasibility-module)
-[![Human In The Loop](https://img.shields.io/badge/Architecture-Human--in--the--Loop-F59E0B?style=for-the-badge)](#-responsible-positioning--safeguards)
-
----
-
-## 📌 Executive Summary
-
-**Molecule Forge** is an AI-powered chemical route-discovery and process-screening platform that identifies commercially promising molecules from refinery aromatics (such as benzene, phenol, toluene, and xylene) and then designs, compares, and ranks practical, sustainable synthesis routes for producing them.
-
-> **Core Philosophy:**
-> Molecule Forge **does not replace chemists** or guarantee autonomous reaction success. Rather, it acts as **"Google Maps for Chemical Manufacturing Routes"** — calculating trade-offs across cost, sustainability, raw-material availability, and scale-up risks to guide researchers toward high-potential opportunities before committing laboratory time and plant resources.
-
-```
-       [ Refinery Feedstock ]
-    (Benzene, Toluene, Xylene)
-                │
-                ▼
-  ┌───────────────────────────┐
-  │      MOLECULE FORGE       │  ◄── AI Retrosynthesis + Multi-Attribute
-  │      Decision Engine      │      Decision Matrix (Forge Score)
-  └─────────────┬─────────────┘
-                │
-    ┌───────────┼───────────┐
-    ▼           ▼           ▼
-[Route A]   [Route B]   [Route C]
- Shortest    Greenest    Highest Local Sourcing
- (3 Steps)  ★ (81/100)   (Domestic 92%)
-    │           │           │
-    └───────────┼───────────┘
-                ▼
-   [ Actionable Lab Validation Plan ]
-   (Risk gates, conversion targets, & TEA)
-```
+[![Deployment Status](https://img.shields.io/badge/Deployment-Vercel_Production_Ready-000000?style=flat-square&logo=vercel)](https://vercel.com)
+[![Framework](https://img.shields.io/badge/Framework-React_19_%7C_Vite_8-61DAFB?style=flat-square&logo=react)](https://react.dev/)
+[![Language](https://img.shields.io/badge/Language-TypeScript_7.0-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Styling](https://img.shields.io/badge/Styling-Tailwind_CSS_v4-38B2AC?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![Standards](https://img.shields.io/badge/Metrics-ACS_GCI_Green_Chemistry-10B981?style=flat-square)](#5-quantitative-scoring-model-and-mathematical-framework)
+[![Architecture](https://img.shields.io/badge/Architecture-Human--in--the--Loop_Decision_Support-F59E0B?style=flat-square)](#10-risk-mitigation-governance-and-responsible-ai-positioning)
 
 ---
 
-## 🛑 The Industrial Problem
+## Table of Contents
 
-A modern refinery does not produce only fuels. Its streams contain foundational chemical building blocks, particularly aromatics. However, converting these streams into high-margin specialty chemicals, Key Starting Materials (KSMs), or Active Pharmaceutical Ingredient (API) intermediates requires solving complex, interconnected problems:
-
-```
-┌─────────────────┐       ┌──────────────────────┐       ┌──────────────────────┐
-│ R&D / Chemistry │       │  Process Engineering │       │ Supply Chain / SCM   │
-│ Can we synthesize│ ───►  │ Can we scale it up   │ ───►  │ Are raw materials    │
-│ this molecule?  │       │ without high hazards?│       │ locally available?   │
-└─────────────────┘       └──────────────────────┘       └──────────────────────┘
-                                                                    │
-                                                                    ▼
-                                                         ┌──────────────────────┐
-                                                         │ Business Development │
-                                                         │ Is the gross margin  │
-                                                         │ commercially viable? │
-                                                         └──────────────────────┘
-```
-
-### The Cost of Sequential Silos
-Currently, these evaluations happen **sequentially across isolated departments**:
-1. A **chemist** designs a synthetically elegant 3-step route in the literature.
-2. A **process engineer** discovers months later that step 2 requires cryogenic cooling or high-pressure autogenous conditions (>60 bar).
-3. A **procurement team** finds that the primary coupling reagent is subject to a 90% import dependence or unstable overseas tariffs.
-4. A **sustainability team** flags that the route produces an unacceptable E-factor (>40 kg waste/kg product) with severe cyanide or heavy metal effluent liabilities.
-
-**Result:** Months of costly laboratory work are wasted on routes that fail basic commercial, environmental, or operational gates.
+- [1. Executive Summary](#1-executive-summary)
+- [2. The Industrial Problem Statement](#2-the-industrial-problem-statement)
+- [3. The Proposed Solution: Five Analytical Pillars](#3-the-proposed-solution-five-analytical-pillars)
+- [4. Operational Workflow](#4-operational-workflow)
+- [5. Quantitative Scoring Model and Mathematical Framework](#5-quantitative-scoring-model-and-mathematical-framework)
+  - [5.1 Multi-Attribute Forge Score Formulation](#51-multi-attribute-forge-score-formulation)
+  - [5.2 Green Chemistry and Environmental Metrics](#52-green-chemistry-and-environmental-metrics)
+- [6. Industrial Case Study: HMEL Bathinda Complex](#6-industrial-case-study-hmel-bathinda-complex)
+  - [6.1 Feedstock Context](#61-feedstock-context)
+  - [6.2 Downstream Valorization Scenario: Benzene to 4-H-3-MBN](#62-downstream-valorization-scenario-benzene-to-4-h-3-mbn)
+  - [6.3 Multi-Route Trade-Off Evaluation Matrix](#63-multi-route-trade-off-evaluation-matrix)
+- [7. System Architecture](#7-system-architecture)
+- [8. Technology Stack and Implementation Details](#8-technology-stack-and-implementation-details)
+- [9. Installation and Deployment Guide](#9-installation-and-deployment-guide)
+  - [9.1 Local Development Environment](#91-local-development-environment)
+  - [9.2 Production Deployment on Vercel](#92-production-deployment-on-vercel)
+- [10. Risk Mitigation, Governance, and Responsible AI Positioning](#10-risk-mitigation-governance-and-responsible-ai-positioning)
+- [11. Strategic Roadmap](#11-strategic-roadmap)
+- [12. Engineering Team and Track Record](#12-engineering-team-and-track-record)
 
 ---
 
-## 💡 The Solution: 5 Integrated Pillars
+## 1. Executive Summary
 
-Molecule Forge breaks departmental silos by combining five core analytical capabilities into a unified digital decision platform:
+**Molecule Forge** is an enterprise-grade, computer-aided process screening and chemical route-discovery platform. It enables integrated petroleum refineries and petrochemical complexes to transition from bulk commodity fuel producers into high-margin specialty chemical and pharmaceutical intermediate manufacturers.
 
-| Pillar | Capability | What It Solves |
+By starting with available refinery aromatic cuts—including benzene, toluene, xylenes, and downstream phenol—the platform systematically generates, screens, and multi-objectively ranks retrosynthetic reaction pathways before capital-intensive laboratory validation is initiated.
+
+```
+       [ Refinery Aromatic Feedstock ]
+         (Benzene / Toluene / Xylenes)
+                       │
+                       ▼
+      ┌─────────────────────────────────┐
+      │         MOLECULE FORGE          │  ◄── Rule-Based Retrosynthesis
+      │      Core Screening Engine      │      + Techno-Economic Analysis (TEA)
+      └────────────────┬────────────────┘      + Green Chemistry Matrix
+                       │
+         ┌─────────────┼─────────────┐
+         ▼             ▼             ▼
+   [ Route A ]    [ Route B ]   [ Route C ]
+    Shortest     ★ Greenest      Domestic
+    (3 Steps)     (Score: 81)   (92% Local)
+         │             │             │
+         └─────────────┼─────────────┘
+                       ▼
+      [ Actionable Experimental Validation Protocol ]
+      (Risk Gates, Selectivity Targets, and Process Window)
+```
+
+> **Guiding Principle:** Molecule Forge serves as a deterministic decision-support instrument—analogous to a navigational engine for chemical engineering—allowing multidisciplinary teams to evaluate technical viability, capital costs, raw-material security, and environmental liabilities simultaneously.
+
+---
+
+## 2. The Industrial Problem Statement
+
+Refinery operations generate abundant aromatic molecules alongside traditional transportation fuels. However, transforming these basic petrochemical intermediates into high-value specialty chemicals, Key Starting Materials (KSMs), or Active Pharmaceutical Ingredients (APIs) is hindered by severe cross-functional friction:
+
+```
+┌──────────────────┐       ┌──────────────────────┐       ┌──────────────────────┐
+│  R&D / Chemistry │       │  Process Engineering │       │ Procurement / Supply │
+│ Synthesizes route│ ───►  │ Identifies scale-up  │ ───►  │ Evaluates import     │
+│ in the laboratory│       │ hazards & separations│       │ dependence & costs   │
+└──────────────────┘       └──────────────────────┘       └──────────────────────┘
+                                                                     │
+                                                                     ▼
+                                                          ┌──────────────────────┐
+                                                          │ Business Development │
+                                                          │ Screens margin       │
+                                                          │ & market viability   │
+                                                          └──────────────────────┘
+```
+
+### The Cost of Sequential Evaluation
+In standard industrial workflows, prospective synthesis routes are evaluated in disconnected silos:
+1. **Synthetic chemists** discover a chemically viable route, optimizing solely for reaction yield in milligram-scale glassware.
+2. **Process engineers** subsequently identify that Step 2 requires cryogenic cooling (-20 °C) or hazardous high-pressure autogenous conditions (>40 bar), introducing prohibitive plant CAPEX.
+3. **Procurement teams** discover that critical coupling reagents or specialized organometallic catalysts suffer from 90%+ overseas import dependencies.
+4. **Environmental teams** calculate unacceptable waste factors (E-factor > 30), highlighting heavy-metal or cyanide effluent compliance barriers.
+
+Consequently, research initiatives waste months of laboratory throughput investigating pathways that ultimately fail commercial, regulatory, or operational viability gates.
+
+---
+
+## 3. The Proposed Solution: Five Analytical Pillars
+
+Molecule Forge breaks departmental silos by unifying chemistry, chemical engineering, procurement, and sustainability into five integrated software pillars:
+
+| Pillar | Functional Scope | Industrial Value |
 |---|---|---|
-| **1. Feedstock Intelligence Layer** | Digital mapping of refinery aromatics (benzene, phenol, toluene, xylenes, sulphur, hexane). | Connects raw refinery streams directly to real-world industrial downstream derivatives. |
-| **2. Target-Product & Retrosynthesis** | Dual-mode discovery (Feedstock-First & Target-First) with rule-constrained disconnections. | Prevents synthetic hallucination by pairing template constraints with reaction precedents. |
-| **3. Green Chemistry & Process Feasibility** | Real-time calculation of E-Factor, PMI, Atom Economy, and solvent toxicity profiles. | Prevents environmental failure modes before the first lab experiment is performed. |
-| **4. Supply Chain & Commercial Screening** | Evaluates domestic supplier reliability, import dependence, and reagent procurement risks. | Shields industrial scale-up against geopolitical and logistics disruptions. |
-| **5. Explainable Decision Support** | Multi-attribute decision matrix producing an overall **Forge Score** with uncertainty boundaries. | Gives chemists, engineers, and executives clear transparency into *why* a route is chosen. |
+| **I. Feedstock Intelligence Layer** | Digital mapping of refinery aromatics (benzene, toluene, xylenes), secondary streams (hexane, sulfur), and functional handles. | Connects captive refinery streams directly to addressable commercial product portfolios. |
+| **II. Target-Product & Retrosynthesis** | Dual-mode pathway exploration: Feedstock-First (diversification) and Target-First (import substitution). | Identifies non-obvious disconnections while eliminating ungrounded generative chemistry hallucinations. |
+| **III. Green Chemistry Screening** | Algorithmic calculation of E-Factor, Process Mass Intensity (PMI), Atom Economy, and solvent environmental hazards. | Eliminates regulatory and effluent liabilities prior to experimental synthesis. |
+| **IV. SCM & Commercial Feasibility** | Multi-attribute assessment of domestic supplier availability, catalog pricing, and raw-material vulnerability. | Protects planned operational units from geopolitical dependencies and supply-chain shocks. |
+| **V. Explainable Decision Governance** | Multi-criteria optimization resulting in a unified **Forge Score**, accompanied by transparent uncertainty profiles. | Provides chemists, engineering leads, and executive sponsors with audited technical rationale. |
 
 ---
 
-## ⚙️ How the Platform Works
+## 4. Operational Workflow
 
 ```
-                                      DUAL DISCOVERY MODES
-                      ┌─────────────────────────────────────────────────────┐
-                      │                                                     │
-   Feedstock-First ───►  Select Refinery Stream (e.g. Benzene, Phenol)      │
-                      │  Define Constraints (max steps, green priority)     │
-                      │                                                     │
-    Target-First  ───►  Enter Target Molecule / SMILES / KSM Name          │
-                      │  Backward retrosynthesis to refinery feedstocks     │
-                      └──────────────────────────┬──────────────────────────┘
-                                                 │
-                                                 ▼
-                                   AI ROUTE GENERATION ENGINE
-                               (Reaction Templates + Precedent Search)
-                                                 │
-                                                 ▼
-                                     MULTI-DIMENSIONAL SCREENING
-                      ┌─────────────────────────────────────────────────────┐
-                      │ Technical: Step count, predicted yield, purity      │
-                      │ Economic: Raw material cost, OPEX sensitivity       │
-                      │ Green Metrics: E-factor, PMI, solvent toxicity      │
-                      │ Supply Chain: Domestic availability index (%)       │
-                      │ Scale-Up: Temperature/pressure envelope, separation │
-                      └──────────────────────────┬──────────────────────────┘
-                                                 │
-                                                 ▼
-                                      THE FORGE SCORE ENGINE
-                                     (Multi-Attribute Ranking)
-                                                 │
-                                                 ▼
-                                      EXPLAINABLE DECISION REPORT
-                                 (Lab validation plan & risk gates)
+                                  OPERATIONAL INPUT MODES
+                 ┌─────────────────────────────────────────────────────────┐
+                 │                                                         │
+Feedstock-First  ──► Select Refinery Cut (Benzene, Phenol, Xylenes)         │
+                 │   Apply Operational Constraints (Max Steps, Solvents)   │
+                 │                                                         │
+Target-First     ──► Supply Target Molecule (SMILES / CAS / Nomenclature)  │
+                 │   Decompose Retrosynthetically to Captive Feeds         │
+                 └────────────────────────────┬────────────────────────────┘
+                                              │
+                                              ▼
+                             AI-ASSISTED RETROSYNTHESIS ENGINE
+                         (Curated Templates + Precedent Validation)
+                                              │
+                                              ▼
+                                 MULTI-CRITERIA EVALUATION
+                 ┌─────────────────────────────────────────────────────────┐
+                 │ Technical: Transformation count, isolation stages       │
+                 │ Economic: Raw-material index, yield-adjusted cost/kg    │
+                 │ Environmental: E-Factor, PMI, solvent hazard profile    │
+                 │ Supply Chain: Domestic availability index (% local)     │
+                 │ Process: Temperature/pressure envelope, unit operations │
+                 └────────────────────────────┬────────────────────────────┘
+                                              │
+                                              ▼
+                                   THE FORGE SCORE ENGINE
+                                (Pareto-Optimized Decision)
+                                              │
+                                              ▼
+                                ACTIONABLE VALIDATION DOSSIER
+                             (Experimental Plan & Risk Gateways)
 ```
 
-### 1. Dual Discovery Modes
-- **Feedstock-First Mode (Downstream Diversification):** The user selects a refinery feedstock (e.g., Benzene or Phenol) and requests high-value opportunities within maximum step limits and green metrics.
-- **Target-First Mode (Import Substitution):** The user enters a target intermediate (by name, CAS, or SMILES) to backward-decompose it into refinery-aligned precursors.
-
-### 2. Guardrailed Retrosynthesis Engine
-Unlike generic LLMs that hallucinate non-existent chemical bonds, Molecule Forge implements a **hybrid chemistry engine**:
-- Curated transformation templates.
-- Structure-based similarity matching.
-- Rule-based chemical constraints (protecting groups, regioselectivity rules).
-- Public reaction precedent checks.
-- LLMs are utilized **strictly for natural-language synthesis, risk explanations, and report generation** — never for inventing chemical transformations.
+1. **Input Ingestion:** The user designates either a captive feedstock stream or enters an existing specialty chemical target via SMILES, CAS, or molecular structure.
+2. **Constrained Exploration:** Retrosynthetic graph expansion generates candidate reaction networks governed by user-defined process boundaries (e.g., maximum four transformations, exclusion of halogenated solvents, preference for atmospheric operations).
+3. **Parallel Attribute Screening:** Candidate routes are simultaneously evaluated across technical, economic, environmental, and supply-chain domains.
+4. **Pareto Ranking:** Routes are ranked using the multi-attribute Forge Score, surfacing the exact trade-offs between shortest, greenest, and most cost-effective alternatives.
+5. **Dossier Generation:** The system synthesizes an experimental validation dossier detailing target conversion rates, primary risk gates, and analytical protocols.
 
 ---
 
-## 📐 Mathematical Framework & Scoring Models
+## 5. Quantitative Scoring Model and Mathematical Framework
 
-### 1. The Forge Score Matrix ($F$)
-Every candidate synthetic route receives a normalized composite score ($0 - 100$) weighted according to organizational priorities:
+### 5.1 Multi-Attribute Forge Score Formulation
+Candidate synthetic routes receive a normalized, multi-attribute index ($F \in [0, 100]$) calibrated according to corporate and operational priorities:
 
-$$\mathbf{F} = w_T T + w_E E + w_G G + w_A A + w_S S + w_D D$$
+$$F = w_T T + w_E E + w_G G + w_A A + w_S S + w_D D$$
+
+Subject to the normalization condition:
+
+$$\sum_{i \in \{T, E, G, A, S, D\}} w_i = 1.0$$
 
 Where:
-* **$T$ (Technical Feasibility - 25%):** Reaction complexity, predicted step yields, regioselectivity, and precedent reliability.
-* **$E$ (Economic Potential - 20%):** Estimated raw material cost, catalyst economics, and yield-adjusted cost/kg.
-* **$G$ (Green Chemistry Performance - 20%):** Waste metrics, solvent safety, and environmental impact.
-* **$A$ (Raw-Material Availability - 15%):** Domestic sourcing ratio, supply-chain resilience, and supplier count.
-* **$S$ (Scale-Up Suitability - 10%):** Absence of cryogenic (< -20 °C) or high-pressure (> 15 bar) conditions, ease of crystallization vs. vacuum distillation.
-* **$D$ (Data Confidence - 10%):** Completeness of verified literature precedents vs. unvalidated reaction steps.
+* **$T$ (Technical Feasibility - 25%):** Number of synthetic transformations, precedent robustness, predicted intermediate stability, and functional-group compatibility.
+* **$E$ (Economic Attractiveness - 20%):** Stoichiometric raw-material costs, catalyst expenses, and yield-adjusted cost per kilogram.
+* **$G$ (Green Chemistry Performance - 20%):** Waste metrics, solvent recovery potential, and regulatory hazard classifications.
+* **$A$ (Raw-Material Availability - 15%):** Domestic sourcing ratio, supplier count, and geographic import reliance.
+* **$S$ (Scale-Up and Process Suitability - 10%):** Absence of extreme process conditions ($T < -15^\circ\text{C}$ or $P > 15\text{ bar}$), crystallization feasibility versus fractional distillation burdens.
+* **$D$ (Data Confidence - 10%):** Ratio of peer-reviewed experimental literature precedents versus interpolated predictive data.
 
 ---
 
-### 2. Green Chemistry Metrics
+### 5.2 Green Chemistry and Environmental Metrics
 
 #### Environmental Factor (E-Factor)
-Measures the total mass of waste generated per kilogram of final product:
+Quantifies total waste generated relative to isolated product output:
 
-$$\text{E-Factor} = \frac{\sum m_{\text{waste}}}{m_{\text{product}}} = \frac{m_{\text{raw materials}} + m_{\text{solvents}} + m_{\text{reagents}} - m_{\text{product}}}{m_{\text{product}}}$$
+$$\text{E-Factor} = \frac{\sum m_{\text{waste}}}{m_{\text{product}}} = \frac{m_{\text{reactants}} + m_{\text{solvents}} + m_{\text{reagents}} - m_{\text{product}}}{m_{\text{product}}}$$
 
-*Target for fine/specialty chemicals: $\text{E-factor} < 15$ (conventional routes frequently exceed $25-50$).*
+*Target threshold for specialty intermediates: $\text{E-Factor} \le 10$ (unoptimized industrial pathways frequently exceed $25 - 50$).*
 
 #### Process Mass Intensity (PMI)
-Evaluates total process input mass relative to target output:
+Measures the absolute mass utilization efficiency within defined system boundaries:
 
-$$\text{PMI} = \frac{\text{Total Mass Input}}{\text{Mass of Finished Product}}$$
+$$\text{PMI} = \frac{\sum m_{\text{input}}}{m_{\text{product}}}$$
 
 #### Atom Economy (AE)
-Quantifies synthetic molecular efficiency:
+Evaluates theoretical incorporation of reactant mass into the desired molecular structure:
 
-$$\text{Atom Economy (\%)} = \left( \frac{\text{Molecular Weight of Target Product}}{\sum \text{Molecular Weight of All Stoichiometric Reactants}} \right) \times 100$$
+$$\text{Atom Economy (\%)} = \left( \frac{\text{Molecular Weight of Target Product}}{\sum \text{Molecular Weight of Stoichiometric Reactants}} \right) \times 100$$
 
-#### Solvent Greenness & Energy Scoring
-- **Solvent Safety Index:** Evaluates toxicity, flash point, bio-persistence, and recyclability (preferring green solvents such as dimethyl carbonate, water, 2-MeTHF over hazardous chlorinated solvents like DCM or chloroform).
-- **Process Intensity:** Tracks heating/cooling cycles, separation complexity, and opportunities for continuous or telescoped processing.
+#### Solvent Safety Index and Process Intensity
+* **Solvent Classification:** Categorizes reaction media based on the ACS Green Chemistry Institute (ACS-GCI) solvent selection guidelines, prioritizing recyclable solvents (e.g., dimethyl carbonate, 2-MeTHF, water) over hazardous chlorinated hydrocarbons.
+* **Thermal & Pressure Envelopes:** Flags thermal regimes requiring high-pressure steam (>180 °C) or cryogenic refrigeration (< -10 °C), directly reducing utility demands.
 
 ---
 
-## 🏭 Industrial Context: HMEL Case Study
+## 6. Industrial Case Study: HMEL Bathinda Complex
 
-### Integrated Complex at Bathinda, Punjab
-**HMEL (HPCL-Mittal Energy Limited)** operates an integrated refinery-petrochemical complex featuring:
-- **11.3 MMTPA** Crude Refinery
-- **1.2 MMTPA** Multi-feed Petrochemical Cracker
-- World-scale Polyethylene (PE) & Polypropylene (PP) units
-- High-purity **Benzene**, **Hexane**, **Sulphur**, and **Carbon Black Feedstock (CBFS)**
+### 6.1 Feedstock Context
+The **HPCL-Mittal Energy Limited (HMEL)** integrated refinery-petrochemical complex in Bathinda, Punjab, represents a major domestic petrochemical infrastructure asset:
+* **11.3 MMTPA** Crude Refining Capacity
+* **1.2 MMTPA** Multi-Feed Cracker Unit
+* World-scale Polyethylene (PE) and Polypropylene (PP) manufacturing
+* Captive aromatic and specialty streams: high-purity **Benzene**, **Hexane**, **Sulfur**, and **Carbon Black Feedstock (CBFS)**
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                   HMEL REFINERY-PETROCHEMICAL COMPLEX                  │
 ├────────────────────┬────────────────────┬──────────────────────────────┤
-│ Refinery Stream    │ Current Role       │ Molecule Forge Opportunity   │
+│ Refinery Stream    │ Baseline Utility   │ Molecule Forge Value Ladder  │
 ├────────────────────┼────────────────────┼──────────────────────────────┤
-│ Benzene            │ Base Petrochemical │ Pharma KSMs, Agrochemicals   │
-│ Phenol (Downstream)│ Resins, Bulk       │ High-Value Performance Add.  │
-│ Hexane             │ Solvents           │ Green Extraction Media       │
-│ Sulphur            │ Commodity / Fert.  │ Vulcanization & Dye Interm.  │
-│ CBFS               │ Carbon Black Feed  │ Advanced Functional Materials│
+│ Benzene            │ Bulk Commodity     │ Pharma KSMs & Agrochemicals  │
+│ Phenol (Downstream)│ Resins / Bulk      │ High-Performance Additives   │
+│ Hexane             │ Industrial Solvent │ High-Purity Extraction Media │
+│ Sulfur             │ Bulk Fertilizer    │ Vulcanization Intermediates  │
+│ CBFS               │ Carbon Black Feed  │ Specialized Conductive Mats  │
 └────────────────────┴────────────────────┴──────────────────────────────┘
 ```
 
-### Real-Life Scenario: Upgrading Benzene to Agrochemical Intermediate (4-H-3-MBN)
+---
 
-| Criterion | Route A (Shortest Route) | Route B (Greenest Route - ★ Chosen) | Route C (Domestic Sourcing) |
+### 6.2 Downstream Valorization Scenario: Benzene to 4-H-3-MBN
+* **Objective:** Produce high-purity **4-Hydroxy-3-methylbenzonitrile (4-H-3-MBN)**, an essential intermediate for agrochemical active ingredients.
+* **Constraints:** Maximum four chemical transformations, domestic raw-material availability $\ge 70\%$, avoidance of cyanide-bearing effluent streams.
+
+### 6.3 Multi-Route Trade-Off Evaluation Matrix
+
+| Criterion | Route A: Shortest Pathway | Route B: Green / Sustainable (★ Selected) | Route C: Domestic Sourcing |
 |---|---|---|---|
-| **Synthetic Steps** | **3 Steps** | 4 Steps | 4 Steps |
-| **Starting Feedstock** | Benzene (99.8%) | Benzene (99.8%) | Benzene (99.8%) |
-| **Technical Score ($T$)** | 84 / 100 | 76 / 100 | 71 / 100 |
-| **Economic Potential ($E$)** | ₹395 / kg | ₹428 / kg | ₹465 / kg |
-| **Green Chemistry ($G$)** | 67 / 100 | **91 / 100** | 78 / 100 |
-| **E-Factor** | 16.4 (High waste) | **8.4 (-49% reduction)** | 12.1 |
-| **Solvent Hazard** | High (Chlorinated/Toxic) | **Safe (DMC / Aqueous recovery)** | Moderate |
-| **Domestic Sourcing ($A$)**| 62% | 75% | **92%** |
-| **Scale-Up Envelope** | Cryogenic step (-15 °C) | **Atmospheric / Low-steam (<90 °C)**| High pressure (25 bar) |
-| **Overall Forge Score** | 77 / 100 | **81.0 / 100 (WINNER)** | 78.0 / 100 |
+| **Synthetic Step Count** | **3 Transformations** | 4 Transformations | 4 Transformations |
+| **Feedstock Precursor** | Benzene (99.8%) | Benzene (99.8%) | Benzene (99.8%) |
+| **Technical Feasibility ($T$)** | 84 / 100 | 76 / 100 | 71 / 100 |
+| **Raw Material Cost Index** | ₹395 / kg | ₹428 / kg | ₹465 / kg |
+| **Green Chemistry Score ($G$)** | 67 / 100 | **91 / 100** | 78 / 100 |
+| **Environmental E-Factor** | 16.4 kg waste / kg | **8.4 kg waste / kg (-49%)** | 12.1 kg waste / kg |
+| **Effluent Hazard Profile** | High (Cyanide intermediate) | **Benign (Aqueous salt / DMC)** | Moderate |
+| **Domestic Sourcing ($A$)** | 62% | 75% | **92%** |
+| **Scale-Up Operating Envelope**| Cryogenic stage (-15 °C) | **Atmospheric / Low-steam (<90 °C)**| High pressure (25 bar) |
+| **Data Confidence ($D$)** | 86 / 100 | 74 / 100 | 69 / 100 |
+| **Overall Forge Score** | **77.0 / 100** | **81.0 / 100 (RECOMMENDED)** | **78.0 / 100** |
 
-> **Decision Intelligence Output:**
-> *"Route B is selected for laboratory screening. Although it entails 4 steps versus 3 steps in Route A, it avoids severe cyanide effluent regulatory liabilities, eliminates cryogenic cooling stages, cuts E-factor waste by 49%, and maintains acceptable unit economics (₹428/kg vs ₹395/kg). Primary laboratory risk gate: validate Step 3 catalytic oxidation selectivity."*
+> **Automated Recommendation Rationale:**
+> *Route B is prioritized for experimental validation. While Route A requires one fewer transformation, Route B reduces E-factor waste by 49%, avoids severe cyanide regulatory liabilities, operates within a standard low-pressure utility envelope, and provides stable unit economics (₹428/kg vs ₹395/kg). Primary laboratory risk gate: validate Step 3 catalytic oxidation selectivity.*
 
 ---
 
-## 🏛️ System Architecture
+## 7. System Architecture
 
 ```mermaid
 graph TD
-    UI[User Interface Layer - React 19 + Tailwind v4 + Lucide]
-    API[Application & Workflow Controller]
-    
-    subgraph Intelligence Core
-        FIL[Feedstock Intelligence Module]
-        CIM[Chemistry Intelligence & Template Library]
-        SCM[Supply Chain & Market Intelligence]
-    end
-    
-    subgraph AI & Evaluation Engine
-        RET[AI Retrosynthesis & Disconnection Engine]
-        PFE[Process Feasibility & Unit Operation Engine]
-        GRE[Green Chemistry & TEA Engine: E-Factor, PMI, AE]
-        RNK[Multi-Objective Forge Score Ranking Engine]
-    end
-    
-    subgraph Decision & Governance
-        EXP[Explainability & Evidence Panel]
-        HITL[Human-in-the-Loop Review & Approval Gate]
-        LVP[Actionable Laboratory Validation Plan]
+    Client[User Interface Layer: React 19 + TailwindCSS v4 + Lucide React]
+    Gateway[Application & Workflow Orchestrator]
+
+    subgraph Intelligence & Domain Layers
+        FIM[Feedstock Intelligence Module]
+        CIM[Chemistry Intelligence & Precedent Library]
+        SCM[Supply Chain & Tariff Risk Module]
     end
 
-    UI --> API
-    API --> FIL & CIM & SCM
-    FIL & CIM & SCM --> RET
-    RET --> PFE & GRE
-    PFE & GRE --> RNK
-    RNK --> EXP
+    subgraph Computational Engines
+        RRE[Constrained Retrosynthetic Search Engine]
+        PFE[Process Engineering & Operations Screening]
+        GCE[Green Chemistry & Mass Balance Engine]
+        MRE[Multi-Objective Forge Score Ranking Engine]
+    end
+
+    subgraph Governance & Output
+        EXP[Explainability & Evidence Module]
+        HITL[Human-in-the-Loop Review Gate]
+        REP[Technical Dossier & Lab Validation Plan]
+    end
+
+    Client --> Gateway
+    Gateway --> FIM & CIM & SCM
+    FIM & CIM & SCM --> RRE
+    RRE --> PFE & GCE
+    PFE & GCE --> MRE
+    MRE --> EXP
     EXP --> HITL
-    HITL --> LVP
-    LVP --> UI
-```
-
-### Module Breakdown
-1. **Feedstock Module:** Purity profiles, functionalization sites, hazard classifications.
-2. **Chemistry Module:** SMILES structure processing, functional-group tolerance, reaction-class verification.
-3. **Process Feasibility:** Identifies extreme pressures, vacuum distillation burdens, and crystallization bottlenecks.
-4. **Green & TEA Module:** Solvents, E-factor, PMI, preliminary mass-balance costing.
-5. **Human-in-the-Loop Gate:** Allows chemists to annotate reaction precedents, input experimental yield findings, and re-rank the decision tree.
-
----
-
-## 🧪 What Makes Molecule Forge Different?
-
-```
-┌──────────────────────────────────────┬──────────────────────────────────────┐
-│ Traditional AI Retrosynthesis Tools │ Molecule Forge Decision Platform     │
-├──────────────────────────────────────┼──────────────────────────────────────┤
-│ ❌ Only asks "Can this be made?"      │  Asks "Can this be made profitably  │
-│                                      │    and sustainably from our feed?"   │
-│ ❌ Treats all 3-step routes equally   │  Penalizes hazardous solvents, toxic │
-│                                      │    effluents, and high pressures     │
-│ ❌ Black-box statistical disconnections│  Explainable evidence with clear     │
-│                                      │    confidence & risk gates           │
-│ ❌ Ignores supply-chain availability │  Factors in domestic sourcing &     │
-│                                      │    import substitution risks         │
-│ ❌ Stops at molecular drawings       │  Outputs laboratory validation plans │
-│                                      │    with measurable milestones        │
-└──────────────────────────────────────┴──────────────────────────────────────┘
+    HITL --> REP
+    REP --> Client
 ```
 
 ---
 
-## 🛡️ Responsible Positioning & Safeguards
+## 8. Technology Stack and Implementation Details
 
-Molecule Forge adheres to strict **Human-in-the-Loop R&D Governance**:
-
-| Identified Risk | Built-in Platform Safeguard |
-|---|---|
-| **AI Suggests Incorrect Route** | Uses curated reaction templates; never allows unconstrained LLM generation. Every step requires chemist validation. |
-| **Incomplete Public Data** | Explicitly surfaces uncertainty flags and confidence intervals; separates measured data from predicted values. |
-| **Impractical Cost Estimates** | All techno-economic estimates are clearly tagged as indicative scenarios with adjustable sensitivity sliders. |
-| **Process Safety Risks** | Automated detection of exothermic runaways, extreme pressures (>15 bar), and toxic effluent classes. |
-| **Regulatory & IP Compliance** | Provenance badges on all transformation precedents to avoid proprietary or patent infringement traps. |
-
-> [!IMPORTANT]
-> Molecule Forge is a **decision-support platform**, not an automated laboratory. Predicted synthetic yields and process models serve as initial hypotheses to prioritize R&D experiments. Physical laboratory testing is mandatory prior to pilot or commercial scale-up.
+* **Client Presentation Layer:** React 19, TypeScript 7.0, Vite 8.3, TailwindCSS v4, Lucide React, Motion.
+* **Cheminformatics Foundations:** SMILES notation parsers, curated transformation templates, substructure similarity indexing.
+* **Process Simulation & Evaluation:** Algorithmic E-Factor calculators, stoichiometric mass-balance models, solvent classification tables.
+* **Deployment & Infrastructure:** Vercel edge deployment with client-side SPA routing (`vercel.json`) and deterministic dependency management (`.npmrc` with `legacy-peer-deps`).
 
 ---
 
-## 💻 Tech Stack & Deployment
+## 9. Installation and Deployment Guide
 
-- **Frontend:** React 19, TypeScript 7, Vite 8, TailwindCSS v4, Lucide React, Motion.
-- **Cheminformatics & Data Design:** Curated reaction graphs, SMILES molecular representations, multi-attribute scoring matrices.
-- **Deployment Platform:** Optimized for **Vercel** with full SPA rewrites and deterministic package resolution (`.npmrc` + `package-lock.json`).
+### 9.1 Local Development Environment
 
-### Running Locally
+Ensure [Node.js](https://nodejs.org/) (version 20.11+ or 22+) and `npm` are installed.
 
 ```bash
-# 1. Clone repository
+# Clone the repository
 git clone https://github.com/rautsiddharth82-crypto/Molecule-Forge.git
 cd Molecule-Forge
 
-# 2. Install dependencies
+# Install dependencies deterministically
 npm install
 
-# 3. Start local development server
+# Launch development server
 npm run dev
 
-# 4. Run TypeScript checks
+# Execute static type analysis
 npm run lint
 
-# 5. Build for production
+# Build optimized production bundle
 npm run build
 ```
 
-### Deploying to Vercel
+### 9.2 Production Deployment on Vercel
 
-This repository includes pre-configured [`vercel.json`](./vercel.json) and [`.vercelignore`](./.vercelignore) files:
-1. Push your repository to GitHub.
-2. Link the repository in the [Vercel Dashboard](https://vercel.com).
-3. Vercel automatically detects the **Vite** preset, runs `npm run build`, and serves from `dist/`.
-
----
-
-## 🗺️ Phased Roadmap
-
-- **Phase 1 (Current Prototype):**
-  - High-fidelity interactive decision cockpit.
-  - Multi-stream screening for Benzene, Phenol, Toluene, and Xylenes.
-  - Interactive Forge Score radar charts, E-Factor, PMI, and commercial trade-off matrices.
-  - Downloadable laboratory validation protocols.
-- **Phase 2 (Industrial Pilot):**
-  - Integration with HMEL Bathinda plant-specific feedstock assay data.
-  - Live supplier and raw-material procurement price feeds.
-  - Local RDKit-driven custom SMILES drawing and automated retrosynthetic tree generation.
-- **Phase 3 (Enterprise Platform):**
-  - Direct bi-directional integration with Laboratory Information Management Systems (LIMS).
-  - Closed-loop machine learning that updates yield confidence as experimental validation runs are logged.
+The repository is pre-configured with root-level `vercel.json` and `.vercelignore` files:
+1. Import the repository into the **Vercel Dashboard**.
+2. Vercel automatically selects the **Vite** preset, executes `npm run build`, and routes all incoming requests through `dist/index.html`.
+3. To deploy directly via the command line:
+   ```bash
+   npx vercel --prod
+   ```
 
 ---
 
-## 👥 Contributors & Acknowledgements
+## 10. Risk Mitigation, Governance, and Responsible AI Positioning
 
-* **Developed by:** Siddharth Raut & Team
-* **Target Application:** Refinery-to-Chemicals downstream diversification & sustainable chemical manufacturing.
-* **Inspiration:** Transitioning industrial energy complexes from bulk commodity producers into specialized high-value chemical innovation hubs.
+| Operational Risk | Engineered Mitigation |
+|---|---|
+| **Synthetic Hallucination** | System enforces template-constrained reaction rules and validated precedents; unconstrained generative language models are prohibited from proposing chemical bonds. |
+| **Incomplete Scientific Literature** | Each reaction step presents a confidence score and isolates verified literature records from predictive estimates. |
+| **Impractical Cost Expectations** | Techno-economic projections are clearly categorized as preliminary sensitivity scenarios with user-tunable feedstock price inputs. |
+| **Process Safety Incidents** | Automated flags highlight exothermic risks, toxic classification intermediates, and extreme pressure/temperature conditions. |
+| **Intellectual Property Infringement**| Provenance tracking provides direct literature references to publicly accessible patent and academic citations. |
+
+> **Mandatory Disclaimer:** Molecule Forge is a digital decision-support tool, not an autonomous synthesis engine. Predicted yields and reaction conditions constitute screening hypotheses that require verification by qualified chemists prior to pilot scale-up.
+
+---
+
+## 11. Strategic Roadmap
+
+* **Phase 1: Proof of Concept (Current):** Interactive multi-criteria screening dashboard for benzene, phenol, toluene, and xylene pathways with green chemistry metrics and validation plan outputs.
+* **Phase 2: Industrial Pilot:** Direct ingestion of HMEL Bathinda crude assay and stream compositions; dynamic local chemical supplier pricing feeds; integration of local RDKit cheminformatics pipelines.
+* **Phase 3: Enterprise Integration:** Bi-directional integration with Laboratory Information Management Systems (LIMS) and Enterprise Resource Planning (ERP) software, enabling continuous calibration as experimental validation runs are logged.
+
+---
+
+## 12. Engineering Team and Track Record
+
+### Core Contributors
+
+* **Siddharth Raut** — *Team Lead & UI/UX Designer*
+  * Platform architecture, user experience design, and end-to-end product implementation.
+* **Abhyuday Jain** — *Domain & Chemistry Researcher*
+  * Chemical route validation, reaction template curation, and green chemistry metric modeling.
+* **Hardik Mathur** — *Backend & Systems Engineer*
+  * Process feasibility logic, data structures, and mathematical scoring algorithms.
+
+### Competitive Track Record
+* **3rd Rank (National Finalist)** — **Punjab & Sind Bank (PSB) Hackathon / Bank of Baroda (BOB) Hackathon**
+* **3rd Rank (National Finalist)** — **NIT Raipur Codeutsava National Hackathon**
